@@ -1,2 +1,2 @@
-# jedi-auditoria-app
-Aplicação plugável de auditoria em banco de dados relacional utilizando Jedi ORM.
+# jedi-audit
+Biblioteca de Auditoria em banco de dados usando o framework Jedi ORM.

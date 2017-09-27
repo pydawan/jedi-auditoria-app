@@ -1,0 +1,33 @@
+apply plugin: 'java'
+apply plugin: 'eclipse'
+
+sourceCompatibility = 1.8
+targetCompatibility = 1.8
+
+group = 'jedi.app.auditoria'
+archivesBaseName = 'jedi-auditoria-app'
+version = 'v1.0.0'
+
+jar {
+   manifest {
+      attributes(
+         'Implementation-Title': 'Jedi Auditoria | Biblioteca de Auditoria em banco de dados usando o framework Jedi ORM.',
+         'Implementation-Version': version,
+         'Main-Class': 'jedi.app.auditoria.JediAuditoria',
+         'Sealed': true
+      )
+   }
+   from sourceSets.main.allSource
+}
+
+repositories {
+   mavenLocal()
+   mavenCentral()
+}
+
+dependencies {
+   compile files('./lib/jedi-app-v1.0.0.jar') 
+   compile files('./lib/jedi-orm-v1.0.0.jar')
+   testCompile 'junit:junit:4.12'
+}
+
