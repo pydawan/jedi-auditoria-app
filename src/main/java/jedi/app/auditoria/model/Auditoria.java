@@ -15,6 +15,7 @@ import jedi.db.models.TextField;
  * 
  * @author thiago-amm
  * @version v1.0.0 26/09/2017
+ * @version v1.0.1 07/10/2017
  * @since v1.0.0
  */
 public class Auditoria<T extends Model> extends Model {
@@ -43,6 +44,15 @@ public class Auditoria<T extends Model> extends Model {
    
    public Auditoria(T objeto, String autor) {
       this(objeto, EventoAuditoria.SALVAR, autor);
+   }
+   
+   public static <T extends Model> Auditoria<T> of(T objeto, EventoAuditoria evento, String autor) 
+         throws IllegalArgumentException {
+      return new Auditoria<T>(objeto, evento, autor);
+   }
+   
+   public static <T extends Model> Auditoria<T> of(T objeto, String autor) {
+      return new Auditoria<T>(objeto, autor);
    }
    
    public String getEvento() {
