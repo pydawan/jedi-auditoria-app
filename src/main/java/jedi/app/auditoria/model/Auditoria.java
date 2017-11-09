@@ -21,11 +21,14 @@ public class Auditoria<T extends Model> extends Model {
    
    private static final long serialVersionUID = 1L;
    
-   @CharField(max_length = 50)
+   @CharField(max_length = 255)
    protected String operacao;
    
    @TextField
    protected String objeto;
+   
+   @CharField(max_length = 255)
+   protected String tabela;
    
    @CharField(max_length = 255)
    protected String autor;
@@ -99,6 +102,14 @@ public class Auditoria<T extends Model> extends Model {
    
    public void setObjeto(T objeto) {
       this.objeto = objeto == null ? "" : objeto.toString();
+      if (objeto != null) {
+         setTabela(objeto.getTableName());
+         if (!this.objeto.matches(".*id=\\d+.*")) {
+            String oldChar = String.format("%s(", objeto.getClass().getSimpleName());
+            String newChar = String.format("%sid=%s, ", oldChar, objeto.getId());
+            this.objeto = this.objeto.replace(oldChar, newChar);
+         }
+      }
    }
    
    public String objeto() {
@@ -112,6 +123,23 @@ public class Auditoria<T extends Model> extends Model {
    
    public Auditoria<T> objeto(T objeto) {
       setObjeto(objeto);
+      return this;
+   }
+   
+   public String getTabela() {
+      return tabela;
+   }
+   
+   public String tabela() {
+      return getTabela();
+   }
+   
+   public void setTabela(String tabela) {
+      this.tabela = tabela;
+   }
+   
+   public Auditoria<T> tabela(String tabela) {
+      setTabela(tabela);
       return this;
    }
    
