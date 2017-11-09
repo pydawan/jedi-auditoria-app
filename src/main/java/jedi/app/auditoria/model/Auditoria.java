@@ -9,13 +9,12 @@ import jedi.db.models.Model;
 import jedi.db.models.TextField;
 
 /**
- * <p>
  * Cria registros de auditoria em um banco de dados relacional.
- * </p>
  * 
  * @author thiago-amm
  * @version v1.0.0 26/09/2017
  * @version v1.0.1 07/10/2017
+ * @version v1.0.2 09/11/2017
  * @since v1.0.0
  */
 public class Auditoria<T extends Model> extends Model {
@@ -23,7 +22,7 @@ public class Auditoria<T extends Model> extends Model {
    private static final long serialVersionUID = 1L;
    
    @CharField(max_length = 50)
-   protected String evento;
+   protected String operacao;
    
    @TextField
    protected String objeto;
@@ -36,57 +35,57 @@ public class Auditoria<T extends Model> extends Model {
    
    public static Manager objects = new Manager(Auditoria.class);
    
-   public Auditoria(T objeto, EventoAuditoria evento, String autor) throws IllegalArgumentException {
+   public Auditoria(T objeto, OperacaoAuditoria operacao, String autor) throws IllegalArgumentException {
       setObjeto(objeto);
-      setEvento(evento);
+      setOperacao(operacao);
       setAutor(autor);
    }
    
    public Auditoria(T objeto, String autor) {
-      this(objeto, EventoAuditoria.SALVAR, autor);
+      this(objeto, OperacaoAuditoria.SALVAR, autor);
    }
    
-   public static <T extends Model> Auditoria<T> of(T objeto, EventoAuditoria evento, String autor) 
+   public static <T extends Model> Auditoria<T> of(T objeto, OperacaoAuditoria operacao, String autor)
          throws IllegalArgumentException {
-      return new Auditoria<T>(objeto, evento, autor);
+      return new Auditoria<T>(objeto, operacao, autor);
    }
    
    public static <T extends Model> Auditoria<T> of(T objeto, String autor) {
       return new Auditoria<T>(objeto, autor);
    }
    
-   public String getEvento() {
-      return evento;
+   public String getOperacao() {
+      return operacao;
    }
    
-   public void setEvento(String evento) {
-      evento = evento == null ? "" : evento;
-      if (evento.isEmpty()) {
-         throw new IllegalArgumentException("ATENÇÃO: o evento da auditoria não pode ser nulo ou vazio!");
+   public void setOperacao(String operacao) {
+      operacao = operacao == null ? "" : operacao;
+      if (operacao.isEmpty()) {
+         throw new IllegalArgumentException("ATENÇÃO: a operação auditada não pode ser nula ou vazia!");
       } else {
-         this.evento = evento;
+         this.operacao = operacao;
       }
    }
    
-   public void setEvento(EventoAuditoria evento) {
-      if (evento == null) {
-         throw new IllegalArgumentException("ATENÇÃO: o evento da auditoria não pode ser nulo!");
+   public void setOperacao(OperacaoAuditoria operacao) {
+      if (operacao == null) {
+         throw new IllegalArgumentException("ATENÇÃO: a operação auditada não pode ser nula!");
       } else {
-         this.evento = evento.getValor();
+         this.operacao = operacao.getValor();
       }
    }
    
-   public String evento() {
-      return getEvento();
+   public String operacao() {
+      return getOperacao();
    }
    
-   public Auditoria<T> evento(String evento) {
-      setEvento(evento);
+   public Auditoria<T> operacao(String operacao) {
+      setOperacao(operacao);
       return this;
    }
    
-   public Auditoria<T> evento(EventoAuditoria evento) {
-      setEvento(evento);
+   public Auditoria<T> operacao(OperacaoAuditoria operacao) {
+      setOperacao(operacao);
       return this;
    }
    
