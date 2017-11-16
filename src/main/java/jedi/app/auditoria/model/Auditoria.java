@@ -17,7 +17,7 @@ import jedi.db.models.TextField;
  * @version v1.0.2 09/11/2017
  * @since v1.0.0
  */
-public class Auditoria<T extends Model> extends Model {
+public class Auditoria extends Model {
    
    private static final long serialVersionUID = 1L;
    
@@ -38,23 +38,23 @@ public class Auditoria<T extends Model> extends Model {
    
    public static Manager objects = new Manager(Auditoria.class);
    
-   public Auditoria(T objeto, OperacaoAuditoria operacao, String autor) throws IllegalArgumentException {
+   public <T extends Model> Auditoria(T objeto, OperacaoAuditoria operacao, String autor) throws IllegalArgumentException {
       setObjeto(objeto);
       setOperacao(operacao);
       setAutor(autor);
    }
    
-   public Auditoria(T objeto, String autor) {
+   public <T extends Model> Auditoria(T objeto, String autor) {
       this(objeto, OperacaoAuditoria.SALVAR, autor);
    }
    
-   public static <T extends Model> Auditoria<T> of(T objeto, OperacaoAuditoria operacao, String autor)
+   public static <T extends Model> Auditoria of(T objeto, OperacaoAuditoria operacao, String autor)
          throws IllegalArgumentException {
-      return new Auditoria<T>(objeto, operacao, autor);
+      return new Auditoria(objeto, operacao, autor);
    }
    
-   public static <T extends Model> Auditoria<T> of(T objeto, String autor) {
-      return new Auditoria<T>(objeto, autor);
+   public static <T extends Model> Auditoria of(T objeto, String autor) {
+      return new Auditoria(objeto, autor);
    }
    
    public String getOperacao() {
@@ -82,12 +82,12 @@ public class Auditoria<T extends Model> extends Model {
       return getOperacao();
    }
    
-   public Auditoria<T> operacao(String operacao) {
+   public Auditoria operacao(String operacao) {
       setOperacao(operacao);
       return this;
    }
    
-   public Auditoria<T> operacao(OperacaoAuditoria operacao) {
+   public Auditoria operacao(OperacaoAuditoria operacao) {
       setOperacao(operacao);
       return this;
    }
@@ -100,7 +100,7 @@ public class Auditoria<T extends Model> extends Model {
       this.objeto = objeto;
    }
    
-   public void setObjeto(T objeto) {
+   public <T extends Model> void setObjeto(T objeto) {
       this.objeto = objeto == null ? "" : objeto.toString();
       if (objeto != null) {
          setTabela(objeto.getTableName());
@@ -116,12 +116,12 @@ public class Auditoria<T extends Model> extends Model {
       return getObjeto();
    }
    
-   public Auditoria<T> objeto(String objeto) {
+   public Auditoria objeto(String objeto) {
       setObjeto(objeto);
       return this;
    }
    
-   public Auditoria<T> objeto(T objeto) {
+   public <T extends Model> Auditoria objeto(T objeto) {
       setObjeto(objeto);
       return this;
    }
@@ -138,7 +138,7 @@ public class Auditoria<T extends Model> extends Model {
       this.tabela = tabela;
    }
    
-   public Auditoria<T> tabela(String tabela) {
+   public Auditoria tabela(String tabela) {
       setTabela(tabela);
       return this;
    }
@@ -155,7 +155,7 @@ public class Auditoria<T extends Model> extends Model {
       return getAutor();
    }
    
-   public Auditoria<T> autor(String autor) {
+   public Auditoria autor(String autor) {
       this.autor = autor;
       return this;
    }
@@ -172,7 +172,7 @@ public class Auditoria<T extends Model> extends Model {
       return getData();
    }
    
-   public Auditoria<T> data(Date data) {
+   public Auditoria data(Date data) {
       setData(data);
       return this;
    }

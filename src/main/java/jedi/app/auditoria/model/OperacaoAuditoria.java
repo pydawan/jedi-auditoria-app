@@ -35,7 +35,8 @@ public enum OperacaoAuditoria {
    MARCAR("Marcar", "MARCAR"),
    GRAVAR("Gravar", "GRAVAR"),
    ATIVAR("Ativar", "ATIVAR"),
-   INATIVAR("Inativar", "INATIVAR");
+   INATIVAR("Inativar", "INATIVAR"),
+   INDETERMINADA("Indeterminada", "INDETERMINADA");
    
    private final String nome;
    private final String valor;
